@@ -10,7 +10,7 @@
 docker-compose up 
 ```
 This command will download/build the required image and start the MySQL database and once the database has started and shows up healthy then it will start the Spring boot application.
-* Check if both the applications have started. You can run the below command, and it will show the contains running.
+* Check if both the applications have started. You can run the below command, and it will show the containers which are running.
 ```
 docker ps
 ```
