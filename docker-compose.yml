@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  mysql-docker-container:
+    image: mysql:latest
+    ports: ['3306:3306']
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=administrator
+      - MYSQL_PASSWORD=password
+    volumes:
+      - /data/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+  spring-boot-jpa-app:
+    image: spring-boot-jpa-image
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      mysql-docker-container:
+        condition: service_healthy
+    ports:
+      - 8111:8080
+    volumes:
+      - /data/spring-boot-app
